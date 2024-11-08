@@ -6,17 +6,17 @@
     <title>Redirecting...</title>
     <script type="text/javascript">
       // Function to get the communityPostId from the URL query parameters
-      function getCommunityPostId() {
+      async function getCommunityPostId() {
         const urlParams = new URLSearchParams(window.location.search);
         console.log("urlParams", urlParams.get("communityPostId"));
         return urlParams.get("communityPostId") || "defaultId"; // Set a default or handle missing ID
       }
 
-      window.onload = function () {
+      window.onload = async function () {
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
         const communityPostId = getCommunityPostId(); // Fetch the ID dynamically
-        const encodedId = encodeURIComponent(communityPostId);
+        const encodedId = await encodeURIComponent(communityPostId);
 
         if (/android/i.test(userAgent)) {
           // Redirect Android users to intent URL
