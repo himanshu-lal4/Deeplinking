@@ -8,6 +8,10 @@
       // Function to get the communityPostId from the URL query parameters
       function getCommunityPostId() {
         const urlParams = new URLSearchParams(window.location.search);
+        alert(
+          "extracted community post id",
+          urlParams.get("communityPostId") || "defaultId"
+        );
         return urlParams.get("communityPostId") || "defaultId"; // Set a default or handle missing ID
       }
 
