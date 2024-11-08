@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script type="text/javascript">
+      // Function to get the communityPostId from the URL query parameters
+      function getCommunityPostId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("communityPostId") || "defaultId"; // Set a default or handle missing ID
+      }
+
       window.onload = function () {
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
+        const communityPostId = getCommunityPostId(); // Fetch the ID dynamically
+        const encodedId = encodeURIComponent(communityPostId);
 
         if (/android/i.test(userAgent)) {
           // Redirect Android users to intent URL
-          window.location.href =
-            "intent://open/CommunityPost#Intent;scheme=onesquareapp;package=com.onesquare_app;end";
+          window.location.href = `intent://open/CommunityPost/${encodedId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
           // Redirect iOS users to custom URL scheme
-          window.location.href = "onesquareapp://open/CommunityPost";
+          window.location.href = `onesquareapp://open/CommunityPost/${encodedId}`;
         } else {
           // Optionally handle other platforms or show an error message
           alert("This link is only supported on mobile devices.");
