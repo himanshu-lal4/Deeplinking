@@ -8,25 +8,25 @@
       // Function to get the screen name and communityPostId from the URL query parameters
       async function getScreenAndPostId() {
         const urlParams = new URLSearchParams(window.location.search);
-        const screen = urlParams.get("screen") || "CommunityPost"; // Set default screen if missing
-        const communityPostId = urlParams.get("communityPostId") || "defaultId"; // Set default ID if missing
+        const screen = urlParams.get("screen") || "DrawerNavigation"; // Set default screen if missing
+        const id = urlParams.get("id") || "defaultId"; // Set default ID if missing
         console.log("Screen:", screen);
-        console.log("CommunityPostId:", communityPostId);
-        return { screen, communityPostId };
+        console.log("CommunityPostId:", id);
+        return { screen, id };
       }
 
       window.onload = async function () {
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
-        const { screen, communityPostId } = await getScreenAndPostId(); // Fetch screen and ID
-        const encodedId = await encodeURIComponent(communityPostId);
+        const { screen, id } = await getScreenAndPostId(); // Fetch screen and ID
+        const encodedId = await encodeURIComponent(id);
 
         if (/android/i.test(userAgent)) {
           // Redirect Android users to intent URL with dynamic screen
-          window.location.href = `intent://open/${screen}/${communityPostId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
+          window.location.href = `intent://open/${screen}/${id}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
           // Redirect iOS users to custom URL scheme with dynamic screen
-          window.location.href = `onesquareapp://open/${screen}/${communityPostId}`;
+          window.location.href = `onesquareapp://open/${screen}/${id}`;
         } else {
           // Optionally handle other platforms or show an error message
           // alert("This link is only supported on mobile devices.");
