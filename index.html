@@ -5,25 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script type="text/javascript">
-      // Function to get the communityPostId from the URL query parameters
-      async function getCommunityPostId() {
+      // Function to get the screen name and communityPostId from the URL query parameters
+      async function getScreenAndPostId() {
         const urlParams = new URLSearchParams(window.location.search);
-        console.log("urlParams", urlParams.get("communityPostId"));
-        return urlParams.get("communityPostId") || "defaultId"; // Set a default or handle missing ID
+        const screen = urlParams.get("screen") || "CommunityPost"; // Set default screen if missing
+        const communityPostId = urlParams.get("communityPostId") || "defaultId"; // Set default ID if missing
+        console.log("Screen:", screen);
+        console.log("CommunityPostId:", communityPostId);
+        return { screen, communityPostId };
       }
 
       window.onload = async function () {
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
-        const communityPostId = await getCommunityPostId(); // Fetch the ID dynamically
+        const { screen, communityPostId } = await getScreenAndPostId(); // Fetch screen and ID
         const encodedId = await encodeURIComponent(communityPostId);
 
         if (/android/i.test(userAgent)) {
-          // Redirect Android users to intent URL
-          window.location.href = `intent://open/CommunityPost/${communityPostId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
+          // Redirect Android users to intent URL with dynamic screen
+          window.location.href = `intent://open/${screen}/${communityPostId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-          // Redirect iOS users to custom URL scheme
-          window.location.href = `onesquareapp://open/CommunityPost/${communityPostId}`;
+          // Redirect iOS users to custom URL scheme with dynamic screen
+          window.location.href = `onesquareapp://open/${screen}/${communityPostId}`;
         } else {
           // Optionally handle other platforms or show an error message
           // alert("This link is only supported on mobile devices.");
