@@ -15,15 +15,15 @@
       window.onload = async function () {
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
-        const communityPostId = getCommunityPostId(); // Fetch the ID dynamically
+        const communityPostId = await getCommunityPostId(); // Fetch the ID dynamically
         const encodedId = await encodeURIComponent(communityPostId);
 
         if (/android/i.test(userAgent)) {
           // Redirect Android users to intent URL
-          window.location.href = `intent://open/CommunityPost/${encodedId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
+          window.location.href = `intent://open/CommunityPost/${communityPostId}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
           // Redirect iOS users to custom URL scheme
-          window.location.href = `onesquareapp://open/CommunityPost/${encodedId}`;
+          window.location.href = `onesquareapp://open/CommunityPost/${communityPostId}`;
         } else {
           // Optionally handle other platforms or show an error message
           // alert("This link is only supported on mobile devices.");
