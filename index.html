@@ -23,10 +23,10 @@
 
         if (/android/i.test(userAgent)) {
           // Redirect Android users to intent URL with dynamic screen
-          window.location.href = `intent://open/${screen}/${id}#Intent;scheme=onesquareapp;package=com.onesquare_app;end`;
+          window.location.href = `intent://open/${screen}/${id}#Intent;scheme=reeltor;package=com.reeltor;end`;
         } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
           // Redirect iOS users to custom URL scheme with dynamic screen
-          window.location.href = `onesquareapp://open/${screen}/${id}`;
+          window.location.href = `reeltor://open/${screen}/${id}`;
         } else {
           // Optionally handle other platforms or show an error message
           // alert("This link is only supported on mobile devices.");
@@ -37,9 +37,7 @@
   <body>
     <p>
       If you are not redirected,
-      <a href="onesquareapp://open/CommunityPost"
-        >click here to open onesquare</a
-      >.
+      <a href="reeltor://open/CommunityPost">click here to open onesquare</a>.
     </p>
   </body>
 </html>
